@@ -84,7 +84,7 @@
 
         map.on('load', () => { //simplifying the function statement: arrow with brackets to define a function
 
-            map.addSource('wa-base', {
+            map.addSource('king-base', {
                 'type': 'raster',
                 'tiles': [
                     'assets/tile1_base/{z}/{x}/{y}.png'
@@ -96,30 +96,30 @@
             map.addSource('wa-landslide', {
                 'type': 'raster',
                 'tiles': [
-                    'assets/lgbtq/{z}/{x}/{y}.png'
+                    'assets/tile2_landslide/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
-                'attribution': 'Map tiles designed by Bo Zhao'
-            }); */ 
+                'attribution': 'Map tiles designed by Mitchell Stapelman</a>'
+            });
 
             // basemap - tile 1
             map.addLayer({
-                'id': 'uw',
+                'id': 'base',
                 'type': 'raster',
                 //'layout': {
                 //    'visibility': 'none'
                 //},
-                'source': 'wa-base'
+                'source': 'wa-landslide'
             });
             // - tile 2
-            /*map.addLayer({
+            map.addLayer({
                 'id': 'lgbtq',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
                 },
                 'source': 'lgbtq-tiles'
-            }); */
+            }); 
 
         });
 
