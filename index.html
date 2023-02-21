@@ -93,7 +93,7 @@
                 'attribution': 'Map tiles designed by Mitchell Stapelman</a>'
             });
 
-            /*map.addSource('lgbtq-tiles', {
+            map.addSource('wa-landslide', {
                 'type': 'raster',
                 'tiles': [
                     'assets/lgbtq/{z}/{x}/{y}.png'
@@ -106,10 +106,10 @@
             map.addLayer({
                 'id': 'uw',
                 'type': 'raster',
-                'layout': {
-                    'visibility': 'none'
-                },
-                'source': 'uw-tiles'
+                //'layout': {
+                //    'visibility': 'none'
+                //},
+                'source': 'wa-base'
             });
             // - tile 2
             /*map.addLayer({
