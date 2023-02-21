@@ -65,6 +65,29 @@
         #menu a.active:hover {
             background: #3074a4;
         }
+        #title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-top: 20px;
+            margin-left: 45px;
+            font-size: 25pt;
+            color: white;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: bolder;
+        }
+        #desc {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-top: 70px;
+            margin-left: 20px;
+            font-size: 10pt;
+            color: lightgray;
+            white-space: pre-wrap;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: bolder;
+        }
     </style>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
 </head>
@@ -72,14 +95,21 @@
 <body>
     <nav id="menu"></nav>
     <div id='map'></div>
+    <div id="title">
+        Landslide Risk Areas - King County
+    </div>
+    <div id="desc">
+        These maps use map tiles to display areas at risk of landslides across King County.
+        Choose a tile from the panel to display a map within King County.
+    </div>
     <script type="text/javascript">
         mapboxgl.accessToken =
             'pk.eyJ1IjoibWl0Y2hlbGxzIiwiYSI6ImNsZWRlaDcwMTAzNDgzcnBjbnFwd24yNzEifQ.ObmlR1g0krQvk3b0S0V3qQ';
         let map = new mapboxgl.Map({
             container: 'map', // container ID
             style: 'mapbox://styles/mapbox/dark-v10',
-            zoom: 7, // starting zoom
-            center: [-120.1, 47.5] // starting center
+            zoom: 9, // starting zoom
+            center: [-121.9, 47.5] // starting center
         });
         var nav = new mapboxgl.NavigationControl();
         map.addControl(nav, 'bottom-right');
@@ -99,7 +129,7 @@
             map.addSource('king-landslides', {
                 'type': 'raster',
                 'tiles': [
-                    'assets/tile2-landslide/{z}/{x}/{y}.png'
+                    'assets/tile2-landslides/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
                 'attribution': 'Map tiles designed by Mitchell Stapelman</a>'
@@ -127,7 +157,7 @@
                 
             // basemap - tile 1
             map.addLayer({
-                'id': 'base',
+                'id': 'King County Basemap',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
@@ -136,7 +166,7 @@
             });
             // tile 2
             map.addLayer({
-                'id': 'landslide',
+                'id': 'Landslide Risk',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
@@ -145,16 +175,16 @@
             });
             // - tile 3
             map.addLayer({
-                'id': 'combined',
+                'id': 'Landslide + Basemap',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
                 },
-                'source': 'king-combined'
+                'source': 'king-combine'
             }); 
             // - tile 4
             map.addLayer({
-                'id': 'theme',
+                'id': 'Land Features',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
@@ -166,14 +196,14 @@
 
 
          // After the last frame rendered before the map enters an "idle" state.
-         map.on('idle', () => {
+        map.on('idle', () => {
             // If these two layers were not added to the map, abort
-            if (!map.getLayer('king-base') || !map.getLayer('king-landslides') || !map.getLayer('king-combined') || !map.getLayer('king-theme')) {
+            if (!map.getLayer('King County Basemap') || !map.getLayer('Landslide Risk') || !map.getLayer('Landslide + Basemap') || !map.getLayer('Land Features')) {
                 return;
             }
 
             // Enumerate ids of the layers.
-            const toggleableLayerIds = ['king-base', 'king-landslides', 'king-combined', 'king-theme'];
+            const toggleableLayerIds = ['King County Basemap', 'Landslide Risk', 'Landslide + Basemap', 'Land Features'];
 
             // Set up the corresponding toggle button for each layer.
             for (const id of toggleableLayerIds) {
