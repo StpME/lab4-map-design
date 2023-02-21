@@ -84,41 +84,60 @@
 
         map.on('load', () => { //simplifying the function statement: arrow with brackets to define a function
 
+            // basemap
             map.addSource('king-base', {
                 'type': 'raster',
                 'tiles': [
-                    'assets/tile1_base/{z}/{x}/{y}.png'
+                    'assets/tile1-basemap/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
                 'attribution': 'Map tiles designed by Mitchell Stapelman</a>'
             });
 
-            map.addSource('wa-landslide', {
+            // landslides
+            map.addSource('king-landslides', {
                 'type': 'raster',
                 'tiles': [
-                    'assets/tile2_landslide/{z}/{x}/{y}.png'
+                    'assets/tile2-landslide/{z}/{x}/{y}.png'
                 ],
                 'tileSize': 256,
                 'attribution': 'Map tiles designed by Mitchell Stapelman</a>'
             });
+
+            // combine
+            map.addSource('king-combine', {
+                'type': 'raster',
+                'tiles': [
+                    'assets/tile3-combine/{z}/{x}/{y}.png'
+                ],
+                'tileSize': 256,
+                'attribution': 'Map tiles designed by Mitchell Stapelman</a>'
+            });
+            
 
             // basemap - tile 1
             map.addLayer({
                 'id': 'base',
                 'type': 'raster',
-                //'layout': {
-                //    'visibility': 'none'
-                //},
-                'source': 'wa-landslide'
+                'layout': {
+                    'visibility': 'none'
+                },
+                'source': 'king-base'
             });
-            // - tile 2
+            // tile 2
             map.addLayer({
-                'id': 'lgbtq',
+                'id': 'landslie',
+                'type': 'raster',
+                'source': 'king-landslides'
+            });
+            // - tile 3
+            map.addLayer({
+                'id': 'combine',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
                 },
-                'source': 'lgbtq-tiles'
+                'source': 'king-combine'
             }); 
 
         });
