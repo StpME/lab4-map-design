@@ -81,7 +81,8 @@
             zoom: 7, // starting zoom
             center: [-120.1, 47.5] // starting center
         });
-
+        var nav = new mapboxgl.NavigationControl();
+        map.addControl(nav, 'bottom-right');
         map.on('load', () => { //simplifying the function statement: arrow with brackets to define a function
 
             // basemap
@@ -113,8 +114,17 @@
                 'tileSize': 256,
                 'attribution': 'Map tiles designed by Mitchell Stapelman</a>'
             });
-            
+            // theme
+            map.addSource('king-theme', {
+                'type': 'raster',
+                'tiles': [
+                    'assets/tile4-theme/{z}/{x}/{y}.png'
+                ],
+                'tileSize': 256,
+                'attribution': 'Map tiles designed by Mitchell Stapelman</a>'
+            });
 
+                
             // basemap - tile 1
             map.addLayer({
                 'id': 'base',
@@ -126,32 +136,44 @@
             });
             // tile 2
             map.addLayer({
-                'id': 'landslie',
-                'type': 'raster',
-                'source': 'king-landslides'
-            });
-            // - tile 3
-            map.addLayer({
-                'id': 'combine',
+                'id': 'landslide',
                 'type': 'raster',
                 'layout': {
                     'visibility': 'none'
                 },
-                'source': 'king-combine'
+                'source': 'king-landslides'
+            });
+            // - tile 3
+            map.addLayer({
+                'id': 'combined',
+                'type': 'raster',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'source': 'king-combined'
+            }); 
+            // - tile 4
+            map.addLayer({
+                'id': 'theme',
+                'type': 'raster',
+                'layout': {
+                    'visibility': 'none'
+                },
+                'source': 'king-theme'
             }); 
 
         });
 
 
-        // After the last frame rendered before the map enters an "idle" state.
-        /*map.on('idle', () => {
+         // After the last frame rendered before the map enters an "idle" state.
+         map.on('idle', () => {
             // If these two layers were not added to the map, abort
-            if (!map.getLayer('uw') || !map.getLayer('lgbtq')) {
+            if (!map.getLayer('king-base') || !map.getLayer('king-landslides') || !map.getLayer('king-combined') || !map.getLayer('king-theme')) {
                 return;
             }
 
             // Enumerate ids of the layers.
-            const toggleableLayerIds = ['uw', 'lgbtq'];
+            const toggleableLayerIds = ['king-base', 'king-landslides', 'king-combined', 'king-theme'];
 
             // Set up the corresponding toggle button for each layer.
             for (const id of toggleableLayerIds) {
@@ -198,12 +220,12 @@
                         );
                     }
                 };
-                
+
                 // in the menu place holder, insert the layer links.
                 const layers = document.getElementById('menu');
                 layers.appendChild(link);
-            } 
-        }); */
+            }
+        });
     </script>
 </body>
 
